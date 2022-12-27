@@ -1,23 +1,20 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
-// Prisma adapter for NextAuth, optional and can be removed
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-
-import { env } from "../../../env/server.mjs";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "../../../server/db/client";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export const authOptions: NextAuthOptions = {
-  // Include user.id on session
-  callbacks: {
-    session({ session, user }) {
-      if (session.user) {
-        session.user.id = user.id;
-      }
-      return session;
-    },
+
+  session: {
+    strategy: "jwt",
   },
-  // Configure one or more authentication providers
-  adapter: PrismaAdapter(prisma),
+
+  pages: {
+    signIn: '/auth/signin',
+    signOut: '/auth/signout',
+  },
+
   providers: [
     CredentialsProvider({
       // The name to display on the sign in form (e.g. 'Sign in with...')
@@ -26,22 +23,27 @@ export const authOptions: NextAuthOptions = {
       // You can specify whatever fields you are expecting to be submitted.
       // e.g. domain, username, password, 2FA token, etc.
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        email: { label: "Username", type: "text", placeholder: "jsmith" },
         password: {  label: "Password", type: "password" }
       },
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
-        const user = { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
+        const {email, password} = credentials as {email: string, password: string};
   
-        if (user) {
-          // Any object returned will be saved in `user` property of the JWT
-          return user
-        } else {
-          // If you return null or false then the credentials will be rejected
-          return null
-          // You can also Reject this callback with an Error or with a URL:
-          // throw new Error('error message') // Redirect to error page
-          // throw '/path/to/redirect'        // Redirect to a URL
+        const user = await prisma.user.findUnique({ where: { email } });
+        
+        if (!user) {
+          throw new Error("No user found");
+        } else {    
+          const isValid = await bcrypt.compare(password, user.password);
+          if (!isValid) {
+            throw new Error("Invalid password");
+          }
+          return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+          };
         }
       }
     })
@@ -50,14 +52,3 @@ export const authOptions: NextAuthOptions = {
 };
 
 export default NextAuth(authOptions);
-function CredentialsProvider(arg0: {
-  // The name to display on the sign in form (e.g. 'Sign in with...')
-  name: string;
-  // The credentials is used to generate a suitable form on the sign in page.
-  // You can specify whatever fields you are expecting to be submitted.
-  // e.g. domain, username, password, 2FA token, etc.
-  credentials: { username: { label: string; type: string; placeholder: string; }; password: { label: string; type: string; }; }; authorize(credentials: any, req: any): Promise<{ id: number; name: string; email: string; } | null>;
-}): import("next-auth/providers/index.js").Provider {
-  throw new Error("Function not implemented.");
-}
-
