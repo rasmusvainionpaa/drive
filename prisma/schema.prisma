@@ -41,6 +41,8 @@ model Account {
 
 model Session {
   id           String   @id @default(cuid())
+  name         String?
+  email        String?
   sessionToken String   @unique
   userId       String
   expires      DateTime
@@ -49,9 +51,10 @@ model Session {
 
 model User {
   id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
+  name          String    @unique
+  email         String   @unique
   emailVerified DateTime?
+  password      String
   image         String?
   accounts      Account[]
   sessions      Session[]
