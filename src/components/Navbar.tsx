@@ -16,6 +16,16 @@ export default function Navbar() {
               <p className="block p-4">Home</p>
             </Link>
           </li>
+          <li>
+            <Link href="/files">
+              <p className="block p-4">Files</p>
+            </Link>
+          </li>
+          <li>
+            <Link href="/notes">
+              <p className="block p-4">Notes</p>
+            </Link>
+          </li>
         </ul>
       </div>
 
