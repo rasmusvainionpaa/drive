@@ -1,6 +1,9 @@
 import Link from "next/link";
+import { FileStat } from "webdav";
+import base64 from "base-64";
 
-export default function File({ file }: any) {
+export default function File(file : any) {
+    const url = base64.encode(`/folders${file.filename}`);
     if (file.type === "directory") {
         return (
             <li className="w-24">
@@ -9,6 +12,7 @@ export default function File({ file }: any) {
                         <img src="/assets/folder.svg" alt="folder" />
                         <h1 className="flex justify-center">
                             {file.basename}
+                            {url}
                         </h1>
                     </div>
                 </Link>
