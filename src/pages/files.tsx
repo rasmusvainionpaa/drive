@@ -3,7 +3,7 @@ import { getSession, useSession } from "next-auth/react";
 import getFilesWebDav from "src/utils/webdav/getFilesWebDav";
 import Layout from "../components/Layout";
 import File from "../components/File";
-import {FileStat} from "webdav";
+import type {FileStat} from "webdav";
 import Link from "next/link";
 
 interface Props {
@@ -25,7 +25,7 @@ export const getServerSideProps = async (context: any) => {
 
 const Files: NextPage<Props> = ({files}) => {
 
-  files.map((file: any) => {
+  files.map((file: FileStat) => {
     console.log(file);
   })
 
@@ -40,7 +40,7 @@ const Files: NextPage<Props> = ({files}) => {
       <div className="mb-5">
             <ul className="grid grid-cols-3 gap-4">
           {
-            files.map((file: any) => {
+            files.map((file: FileStat) => {
               return (
                   <File key={file.etag} file={file} />
               )
