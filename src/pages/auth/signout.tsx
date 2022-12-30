@@ -24,7 +24,7 @@ const Home: NextPage = () => {
   return (
     <Layout>
         <h1>Signing out</h1>
-        <button onClick={() => signOut({callbackUrl: 'http://localhost:3000'})}>Sign out</button>
+        <button onClick={() => signOut({callbackUrl: '/'})}>Sign out</button>
     </Layout>
     );
 };
