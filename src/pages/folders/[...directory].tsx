@@ -14,11 +14,13 @@ export const getServerSideProps = async (context: any) => {
 
     const directory = context.query.directory;
 
-    const url = Object.values(directory).join("/");
+    const url = directory.join("/");
 
     const rawFiles = await getFilesWebDav("/" + url)
     
     const files = JSON.parse(JSON.stringify(rawFiles))
+
+    console.log()
 
     return {
         props: { 
@@ -39,7 +41,7 @@ const Files: NextPage<Props> = (files) => {
             <div className="mb-5">
                 <ul className="grid grid-cols-3 gap-4">
                     {
-                        files.files.map((file: any) => {
+                        files.files.map((file: FileStat) => {
                             return (
                                 <File key={file.etag} file={file} />
                             )
