@@ -2,9 +2,9 @@ import { createClient } from "webdav";
 
 const getFilesWebDav = async (directory: string) => {
 
-    const client = createClient(process.env.HEZNER_STORAGEBOX_HOST_WEBDAV!, {
-        username: process.env.HEZNER_STORAGEBOX_USERNAME!,
-        password: process.env.HEZNER_STORAGEBOX_PASSWORD!,
+    const client = createClient(process.env.WEBDAV_HOST!, {
+        username: process.env.WEBDAV_USER!,
+        password: process.env.WEBDAV_PASSWORD!,
     })
 
     const files = await client.getDirectoryContents(directory)
@@ -13,3 +13,4 @@ const getFilesWebDav = async (directory: string) => {
 }
 
 export default getFilesWebDav;
+
