@@ -5,28 +5,33 @@ export default function Navbar() {
   const { data: session, status } = useSession();
 
   return (
-    <nav className="flex flex-row justify-between border-b">
+    <nav className="flex flex-row justify-between border-b border-blue-500">
       <div className="flex flex-row">
         <Link href="/">
-          <h1 className="p-4 font-bold">Drive</h1>
+          <h1 className="p-4 font-bold flex justify-center">Drive</h1>
         </Link>
-        <ul className="flex flex-row">
-          <li>
-            <Link href="/">
-              <p className="block p-4">Home</p>
-            </Link>
-          </li>
-          <li>
-            <Link href="/files">
-              <p className="block p-4">Files</p>
-            </Link>
-          </li>
-          <li>
-            <Link href="/notes">
-              <p className="block p-4">Notes</p>
-            </Link>
-          </li>
-        </ul>
+        <ul className="flex flex-row justify-start items-start">
+                <li>
+                    <Link  href="/" className="flex flex-row">
+                        <p className="block p-4">Home</p>
+                    </Link>
+                </li>
+                <li>
+                    <Link href="/f" className="flex flex-row">
+                        <p className="block p-4">Files</p>
+                    </Link>
+                </li>
+                <li>
+                    <Link href="/n" className="flex flex-row">
+                        <p className="block p-4">Notes</p>
+                    </Link>
+                </li>
+                <li>
+                    <Link href="/pictures" className="flex flex-row">
+                        <p className="block p-4">Pictures</p>
+                    </Link>
+                </li>
+            </ul>
       </div>
 
       {session?.user ? (
