@@ -42,17 +42,15 @@ const SignUp: NextPage = (props) => {
 
   return (
     <Layout>
-      <div className="mb-5 flex flex-row text-3xl">
-        <h1 className="ml-2">
-          <Link href="/">Orders / </Link>Add
-        </h1>
-      </div>
 
       <div className="flex justify-center">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="max-w-3/4 flex w-72 flex-col justify-center rounded-lg bg-blue-50 p-5"
         >
+          <h1 className="flex justify-center">
+            Sign Up
+          </h1>
 
           <div className="mb-4 flex flex-col">
             <label htmlFor="name">Name</label>
@@ -110,7 +108,7 @@ const SignUp: NextPage = (props) => {
 
           <button
             type="submit"
-            className={"flex w-12 rounded bg-blue-500 px-2 py-1 text-white"}
+            className={"flex justify center w-24 rounded bg-blue-500 px-2 py-1 text-white"}
           >
             Sign Up
           </button>
