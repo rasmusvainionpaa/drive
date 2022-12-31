@@ -17,7 +17,7 @@ const SignIn: NextPage = (props) => {
     formState: { errors },
   } = useForm<Props>();
 
-  const onSubmit: SubmitHandler<Props> = async (data: any) => {
+  const onSubmit: SubmitHandler<Props> = async (data: Props) => {
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,

@@ -21,7 +21,7 @@ const SignUp: NextPage = (props) => {
     formState: { errors },
   } = useForm<Props>();
 
-  const onSubmit: SubmitHandler<Props> = async (data: any) => {
+  const onSubmit: SubmitHandler<Props> = async (data: Props) => {
     if(data.password !== data.passwordAgain) {
       alert("Passwords don't match");
       return;
