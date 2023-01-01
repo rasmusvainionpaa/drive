@@ -12,34 +12,28 @@ interface Props {
   files: FileStat[];
 }
 
-export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-
-  const files = await getFilesWebDav("/")
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const files = await getFilesWebDav("/");
 
   return {
-      props: { 
-          files
-      },
+    props: {
+      files,
+    },
   };
 };
 
-const Files: NextPage<Props> = ({files}) => {
-
+const Files: NextPage<Props> = ({ files }) => {
   return (
     <Layout>
-      <div className="flex justify-start text-xl">
-        <FilePath />
-      </div>
-      
+      <div className="flex justify-start text-xl"></div>
+
       <div className="py-2">
-            <ul className="grid grid-row">
-          {
-            files.map((file: FileStat) => {
-              return (
-                  <File key={file.etag} file={file} />
-              )
-            })
-          }
+        <ul className="grid-row grid">
+          {files.map((file: FileStat) => {
+            return <File key={file.etag} file={file} />;
+          })}
         </ul>
       </div>
     </Layout>
