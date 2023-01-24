@@ -1,42 +1,25 @@
-import base64 from "base-64";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import path from "path";
 
-export default function FilePath() {
-    const path = useRouter().query.directory === undefined ? "" : useRouter().query.directory as string;
+interface Props {
+    path: string;
+    name: string;
+}
 
-    const decodedPath = base64.decode(path).split("/");
+export default function FilePath({path, name}: Props) {
 
-    console.log(decodedPath);
-
-    if(path === undefined) return (
-        <nav className="flex flex-row justify-between border-b">
-            <ul className="flex flex-row">
-                <li>
-                    <Link href="/f">
-                        <p className="block p-4">Files</p>
-                    </Link>
-                </li>
-            </ul>
-        </nav>
+    if(path === "") return (
+        <li>
+            <Link href="/f">
+                <p className="block p-1">/</p>
+            </Link>
+        </li>
     )
 
     return (
-        <nav className="flex flex-row justify-between border-b">
-            <ul className="flex flex-row">
-                {
-                    decodedPath.map((path: string) => {
-                        return (
-                            <li>
-                                <Link href="/">
-                                    <p className="block p-4">{path}</p>
-                                </Link>
-                            </li>
-                        )
-                    })
-                }
-            </ul>
-        </nav>
+        <li>
+            <Link href={path}>
+                <p className="block p-1">{name} /</p>
+            </Link>
+        </li>
     );
 }
