@@ -1,8 +1,8 @@
-import { type NextPage } from "next";
+import { GetServerSidePropsContext, type NextPage } from "next";
 import { getSession, useSession } from "next-auth/react";
 import Layout from "../../components/Layout";
 
-export const getServerSideProps = async (context: any) => {
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const session = await getSession(context);
   
   if (!session) {
