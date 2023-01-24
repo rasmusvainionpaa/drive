@@ -42,7 +42,6 @@ const SignUp: NextPage = (props) => {
 
   return (
     <Layout>
-
       <div className="flex justify-center">
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -108,9 +107,9 @@ const SignUp: NextPage = (props) => {
 
           <button
             type="submit"
-            className={"flex justify center w-24 rounded bg-blue-500 px-2 py-1 text-white"}
+            className={"flex justify-center w-full rounded bg-blue-200 px-2 py-1 text-black"}
           >
-            Sign Up
+            Sign up
           </button>
         </form>
       </div>
