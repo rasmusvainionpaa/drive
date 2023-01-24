@@ -7,5 +7,5 @@ export interface FileType {
   etag: string | null;
   mime?: string;
   props?: DAVResultResponseProps;
-  //url?: string;
+  url?: string;
 }
