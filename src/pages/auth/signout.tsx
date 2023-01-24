@@ -1,4 +1,4 @@
-import { type NextPage } from "next";
+import { GetServerSidePropsContext, type NextPage } from "next";
 import { getSession, signOut, useSession } from "next-auth/react";
 import Layout from "../../components/Layout";
 
@@ -23,8 +23,10 @@ const Home: NextPage = () => {
 
   return (
     <Layout>
+      <div>
         <h1>Signing out</h1>
         <button onClick={() => signOut({callbackUrl: '/'})}>Sign out</button>
+      </div>
     </Layout>
     );
 };
