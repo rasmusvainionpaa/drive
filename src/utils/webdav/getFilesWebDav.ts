@@ -7,8 +7,8 @@ const getFilesWebDav = async (directory: string) => {
         password: process.env.WEBDAV_PASSWORD!,
     })
 
-    const files = await client.getDirectoryContents(directory, { deep: false })
-    
+    const files = await client.getDirectoryContents(directory)
+
 
     return files;
 }

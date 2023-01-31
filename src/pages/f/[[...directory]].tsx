@@ -20,10 +20,20 @@ export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
 
+  console.log(context.query.directory)
+
+  if (context.query.directory === undefined) {
+    console.log("juu on se undefined")
+  } else {
+    console.log("mitä vittua")
+  }
+
   const url =
     context.query.directory === undefined
       ? "/"
       : base64.decode(context.query.directory as string);
+
+  console.log("ny siihe o asetettu: " + url)
 
   const files = await getFilesWebDav(url);
 
