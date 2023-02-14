@@ -6,10 +6,11 @@ export default async function getFileContents(url: string) {
         password: process.env.WEBDAV_PASSWORD!,
     })
 
-
     url === "" ? "/" : url;
 
     const buff = await client.getFileContents(url);
+
+    console.log(JSON.stringify(buff))
 
     return buff;
 }

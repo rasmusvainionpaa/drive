@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import Link from "next/link";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Layout from "../../components/Layout";
 import { trpc } from "../../utils/trpc";
@@ -12,7 +13,7 @@ interface Props {
 }
 
 const SignUp: NextPage = (props) => {
-
+  const [pwdMatch, setPwdMatch] = useState<Boolean>(true);
   
   const {
     register,
@@ -23,10 +24,10 @@ const SignUp: NextPage = (props) => {
 
   const onSubmit: SubmitHandler<Props> = async (data: Props) => {
     if(data.password !== data.passwordAgain) {
-      alert("Passwords don't match");
+      setPwdMatch(false)
       return;
     }
-    
+    setPwdMatch(true)
     try {
       await fetch(`/api/user`, {
         method: "POST",
@@ -42,6 +43,7 @@ const SignUp: NextPage = (props) => {
 
   return (
     <Layout>
+      {pwdMatch ? null : <p>Password don't match</p>}
       <div className="flex justify-center">
         <form
           onSubmit={handleSubmit(onSubmit)}

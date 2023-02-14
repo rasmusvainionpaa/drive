@@ -1,43 +1,27 @@
 import { GetServerSidePropsContext, type NextPage } from "next";
 import { getSession, useSession } from "next-auth/react";
+import getDirectoryContents from "src/utils/ftp/getDirContents";
+import getDir from "src/utils/sftp/getDir";
 import Layout from "../../components/Layout";
 
 interface Props {
-  url: string;
+  files: string[];
 }
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  const session = await getSession(context);
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/auth/signin",
-        permanent: false,
-      },
-    };
-  }
-
-  const notes = await prisma?.posts.findMany({
-    where: {
-      userId: session?.user?.id,
-    },
-  });
-
-  if(!notes) {
-    return {
-      notFound: true,
-    }
-  }
+ 
+  const files = await getDir();
 
   return {
     props: {
-      notes: JSON.stringify(notes),
+      files: files,
     },
   };
 };
 
-const Notes: NextPage = (url) => {
+const Notes: NextPage = (files) => {
+
+  console.log(files)
 
   return (
     <Layout>

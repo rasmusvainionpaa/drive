@@ -5,7 +5,9 @@ import getFileContents from "src/utils/webdav/getFileContents";
 import Image from "next/image";
 
 interface Props {
-    picture: any;
+    picture: {
+        data: string
+    };
 }
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
@@ -13,9 +15,10 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
     const res = JSON.parse(JSON.stringify(await getFileContents(url)));
 
-    console.log("type of res: ",url);
+    //  vanha tapa, ei toimi
+    //const data = base64.encode(res.data)
 
-    const data = base64.encode(res.data);
+    const data = Buffer.from(res.data).toString('base64')
 
     return {
         props: {
@@ -24,15 +27,14 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     };
 };
 
-const Show:NextPage <Props> = ({picture}) => {
-
-    console.log(picture);
+const Show:NextPage<Props> = ({picture}) => {
 
     return (
         <Layout>
+            <div className="">
+                <button onClick={() => history.back()}>Back</button>
+            </div>
             <div className="flex flex-row justify-center">
-                {picture && <img src={"data:image/jpg;base-64,"+picture} alt='image'></img>}
-                <img src={`data:image/jpg;base64,${picture}`} />
                 <Image unoptimized src={`data:image/plain;base64,${picture}`} alt='Lacdscape picture' width={400} height={400} />
             </div>
         </Layout>

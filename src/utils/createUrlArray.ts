@@ -4,6 +4,7 @@ interface DirectoryUrl {
     url: string;
     name: string;
 }
+
 /**
  * Creates an array of objects with url and name
  * @param url string array of url parts
@@ -24,6 +25,7 @@ export default function createUrlArray(url: string[]): DirectoryUrl[] {
 
         for (let j = i; 0 < j; j--) {
             tempString = "/" + url[j]! + tempString;
+
         }
 
         tempObj.url = base64.encode(tempString);
@@ -37,7 +39,9 @@ export default function createUrlArray(url: string[]): DirectoryUrl[] {
             url: "",
             name: ""
         };
-    }
 
+        tempString = ""
+
+    }
     return urlArray;
 }

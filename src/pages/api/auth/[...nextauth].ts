@@ -24,17 +24,17 @@ export const authOptions: NextAuthOptions = {
       // e.g. domain, username, password, 2FA token, etc.
       credentials: {
         email: { label: "Username", type: "text", placeholder: "jsmith" },
-        password: {  label: "Password", type: "password" }
+        password: { label: "Password", type: "password" }
       },
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
-        const {email, password} = credentials as {email: string, password: string};
-  
+        const { email, password } = credentials as { email: string, password: string };
+
         const user = await prisma.user.findUnique({ where: { email } });
-        
+
         if (!user) {
           throw new Error("No user found");
-        } else {    
+        } else {
           const isValid = await bcrypt.compare(password, user.password);
           if (!isValid) {
             throw new Error("Invalid password");
@@ -49,6 +49,7 @@ export const authOptions: NextAuthOptions = {
     })
     // ...add more providers here
   ],
+  secret: process.env.JWT_SECRET,
 };
 
 export default NextAuth(authOptions);

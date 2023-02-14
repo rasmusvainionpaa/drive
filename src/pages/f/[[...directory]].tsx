@@ -11,6 +11,7 @@ import { FileType } from "src/types/fileType";
 import Directory from "src/components/Directory";
 import createUrlArray from "src/utils/createUrlArray";
 import sortByFileType from "src/utils/sortByFileType";
+import Toolbar from "src/components/Toolbar";
 
 interface Props {
   files: FileType[];
@@ -20,20 +21,12 @@ export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
 
-  console.log(context.query.directory)
-
-  if (context.query.directory === undefined) {
-    console.log("juu on se undefined")
-  } else {
-    console.log("mitä vittua")
-  }
-
   const url =
     context.query.directory === undefined
       ? "/"
       : base64.decode(context.query.directory as string);
 
-  console.log("ny siihe o asetettu: " + url)
+
 
   const files = await getFilesWebDav(url);
 
@@ -54,6 +47,7 @@ const Files: NextPage<Props> = (files) => {
   
   return (
     <Layout>
+      <Toolbar />
       <div className="flex justify-start text-l">
         <div className="justify-between border-b border-blue-500">
           <ul className="flex flex-row">

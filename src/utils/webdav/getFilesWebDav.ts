@@ -14,4 +14,3 @@ const getFilesWebDav = async (directory: string) => {
 }
 
 export default getFilesWebDav;
-

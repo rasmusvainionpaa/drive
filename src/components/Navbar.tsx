@@ -22,11 +22,6 @@ export default function Navbar() {
                     </Link>
                 </li>
                 <li>
-                    <Link href="/n" className="flex flex-row">
-                        <p className="block p-4">Notes</p>
-                    </Link>
-                </li>
-                <li>
                     <Link href="/pictures" className="flex flex-row">
                         <p className="block p-4">Pictures</p>
                     </Link>
