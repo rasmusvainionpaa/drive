@@ -3,31 +3,31 @@ import { GetServerSidePropsContext, NextPage } from "next/types";
 import Layout from "src/components/Layout";
 import getFileContents from "src/utils/webdav/getFileContents";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 interface Props {
-    picture: {
-        data: string
-    };
+    url: string
 }
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-    const url = base64.decode(context.query.url as string);
-
-    const res = JSON.parse(JSON.stringify(await getFileContents(url)));
-
-    //  vanha tapa, ei toimi
-    //const data = base64.encode(res.data)
-
-    const data = Buffer.from(res.data).toString('base64')
 
     return {
         props: {
-            picture: data,
+            url: context.query.url as string,
         },
     };
 };
 
-const Show:NextPage<Props> = ({picture}) => {
+const Show:NextPage<Props> = ({url}) => {
+    const [image, setImage] = useState<string>()
+
+    useEffect(() => {
+        fetch("/api/i/" + url)
+        .then(res => res.blob())
+        .then(blob => URL.createObjectURL(blob))
+        .then(img => setImage(img))
+    }, [])
 
     return (
         <Layout>
@@ -35,7 +35,7 @@ const Show:NextPage<Props> = ({picture}) => {
                 <button onClick={() => history.back()}>Back</button>
             </div>
             <div className="flex flex-row justify-center">
-                <Image unoptimized src={`data:image/plain;base64,${picture}`} alt='Lacdscape picture' width={400} height={400} />
+                <img src={image} />
             </div>
         </Layout>
     )
