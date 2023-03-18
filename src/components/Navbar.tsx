@@ -12,13 +12,13 @@ export default function Navbar() {
         </Link>
         <ul className="flex flex-row justify-start items-start">
                 <li>
-                    <Link  href="/" className="flex flex-row">
-                        <p className="block p-4">Home</p>
+                    <Link href="/f" className="flex flex-row">
+                        <p className="block p-4">Files</p>
                     </Link>
                 </li>
                 <li>
-                    <Link href="/f" className="flex flex-row">
-                        <p className="block p-4">Files</p>
+                    <Link  href="/pictures" className="flex flex-row">
+                        <p className="block p-4">Pictures</p>
                     </Link>
                 </li>
             </ul>
