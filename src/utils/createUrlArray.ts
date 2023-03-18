@@ -10,8 +10,14 @@ interface DirectoryUrl {
  * @param url string array of url parts
  * @returns array of objects with url and name
  */
-export default function createUrlArray(url: string[]): DirectoryUrl[] {
+export default function createUrlArray(rawUrl: string): DirectoryUrl[] {
     const urlArray: DirectoryUrl[] = [];
+
+    console.log("Raw url: ", rawUrl)
+
+    const url = rawUrl.split("/")
+
+    console.log("Splitted url: ", url)
 
     let tempObj: DirectoryUrl = {
         url: "",
@@ -20,7 +26,6 @@ export default function createUrlArray(url: string[]): DirectoryUrl[] {
 
     let tempString = "";
 
-
     for (let i = 0; i < url.length; i++) {
 
         for (let j = i; 0 < j; j--) {
@@ -28,7 +33,7 @@ export default function createUrlArray(url: string[]): DirectoryUrl[] {
 
         }
 
-        tempObj.url = base64.encode(tempString);
+        tempObj.url = tempString;
         tempObj.name = url[i]!;
 
         // add new object to array
