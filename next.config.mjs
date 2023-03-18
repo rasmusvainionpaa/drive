@@ -13,7 +13,9 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  images: {
+    domains: ['rases.ams3.digitaloceanspaces.com'],
+  },
 };
-
 
 export default config;
