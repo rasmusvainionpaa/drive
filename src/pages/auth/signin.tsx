@@ -1,30 +1,51 @@
-import { NextPage } from "next";
-import { signIn } from "next-auth/react";
+import { GetServerSidePropsContext, NextPage } from "next";
+import { getSession, signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Layout from "../../components/Layout";
 
-interface Props {
+interface UserProps {
   email: string;
   password: string;
 }
 
-const SignIn: NextPage = (props) => {
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  const session = await getSession(context);
+  
+  if (session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+
+    }
+  }
+};
+
+const SignIn: NextPage = () => {
+  const router = useRouter()
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<Props>();
+  } = useForm<UserProps>();
 
-  const onSubmit: SubmitHandler<Props> = async (data: Props) => {
+  const onSubmit: SubmitHandler<UserProps> = async (data: UserProps) => {
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
       redirect: false,
     })
 
-    console.log(res);
+    router.replace(router.asPath)
 
     reset();
   };
