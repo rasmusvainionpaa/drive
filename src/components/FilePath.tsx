@@ -10,7 +10,7 @@ export default function FilePath({path, name}: Props) {
     if(path === "") return (
         <li>
             <Link href="/f">
-                <p className="block p-1">/</p>
+                <p className="block p-1">Files /</p>
             </Link>
         </li>
     )
